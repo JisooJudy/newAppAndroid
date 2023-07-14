@@ -16,11 +16,11 @@ data class  RssChannel(
     val title: String,
 
     @Element(name="item")
-    val items: List<NewItem>? = null,
+    val items: List<NewsItem>? = null,
 )
 
 @Xml(name="item")
-data class NewItem (
+data class NewsItem (
     @PropertyElement(name="title")
     val title: String? = null,
 
