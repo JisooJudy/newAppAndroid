@@ -36,13 +36,60 @@ class MainActivity : AppCompatActivity() {
 
         newsAdapter = NewsAdapter()
 
+        val newsService = retrofit.create(NewsService::class.java)
+
         binding.newRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
                 adapter = newsAdapter
         }
 
-        val newsService = retrofit.create(NewsService::class.java)
-        newsService.mainFeed().enqueue(object:Callback<NewsRss> {
+        binding.feedChip.setOnClickListener{
+            binding.chipGroup.clearCheck()//다른 칩 체크 해제시킴
+            binding.feedChip.isChecked = true
+
+            //todo api 호출, 리스트를 변경
+            newsService.mainFeed().submitList()
+        }
+        binding.politicsChip.setOnClickListener{
+            binding.chipGroup.clearCheck()//다른 칩 체크 해제시킴
+            binding.politicsChip.isChecked = true
+
+            //todo api 호출, 리스트를 변경
+            newsService.politicsNews().submitList()
+        }
+        binding.economyChip.setOnClickListener{
+            binding.chipGroup.clearCheck()//다른 칩 체크 해제시킴
+            binding.economyChip.isChecked = true
+
+            //todo api 호출, 리스트를 변경
+            newsService.economyNews().submitList()
+        }
+        binding.socialChip.setOnClickListener{
+            binding.chipGroup.clearCheck()//다른 칩 체크 해제시킴
+            binding.socialChip.isChecked = true
+
+            //todo api 호출, 리스트를 변경
+            newsService.socialNews().submitList()
+        }
+        binding.itChip.setOnClickListener{
+            binding.chipGroup.clearCheck()//다른 칩 체크 해제시킴
+            binding.itChip.isChecked = true
+
+            //todo api 호출, 리스트를 변경
+            newsService.itNews().submitList()
+        }
+        binding.sportsChip.setOnClickListener{
+            binding.chipGroup.clearCheck()//다른 칩 체크 해제시킴
+            binding.sportsChip.isChecked = true
+
+            //todo api 호출, 리스트를 변경
+            newsService.sportsNews().submitList()
+        }
+
+    }
+
+    private fun Call<NewsRss>.submitList() {
+        enqueue(object:Callback<NewsRss> {
             override fun onResponse(call: Call<NewsRss>, response: Response<NewsRss>) {
                 Log.e("MainActivity","${response.body()?.channel?.items}")
 
@@ -72,10 +119,7 @@ class MainActivity : AppCompatActivity() {
                     }.start()
 
                 }
-
-
             }
-
             override fun onFailure(call: Call<NewsRss>, t: Throwable) {
                 t.printStackTrace()
             }
